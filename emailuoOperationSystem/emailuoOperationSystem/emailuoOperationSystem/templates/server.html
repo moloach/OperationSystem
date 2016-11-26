@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<style>
+   .body-content {
+       margin: 0px;
+       padding: 0px;
+   }
+   ul.nav.nav-pills.nav-stacked {
+       width: 20%;
+
+   }
+</style>
+
+<h3>{{ message }}</h3>
+
+<ul class="nav nav-pills nav-stacked">
+    <li class="active"><a href="#">Home</a></li>
+    <li><a href="#">SVN</a></li>
+    <li><a href="#">iOS</a></li>
+</ul>
+
+
+{% endblock %}
+
+
