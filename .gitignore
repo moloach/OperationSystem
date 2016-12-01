@@ -1,4 +1,10 @@
 *.pyc
+<<<<<<< HEAD
 bin/
 .vs
 obj
+=======
+.vs/
+bin/
+obj/
+>>>>>>> 5574e1bc6aea0aeebeb0b87afb1315ace6d29164
