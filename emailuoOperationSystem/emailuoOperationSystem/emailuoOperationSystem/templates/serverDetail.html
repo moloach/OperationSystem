@@ -1,0 +1,47 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<style>
+    .page-header {
+        margin-top: 5%;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        padding-top: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: #f5f5f5;
+        border-right-width: 1px;
+        border-right-style: solid;
+        border-right-color: rgb(238,238,238);
+    }
+</style>
+
+
+<div class="container-fliud">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="{{ url_for('serverStatus')}}">status</a></li>
+                <li><a href="{{ url_for('serverManagement') }}">managements</a></li>
+                <li><a href="#">group</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-5 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <form method="POST">
+                {{form.name.label}} {{form.name()}}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
