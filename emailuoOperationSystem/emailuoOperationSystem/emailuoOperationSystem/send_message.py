@@ -12,6 +12,6 @@ channel.basic_publish(exchange = '',
                       routing_key = 'hello',
                       body = 'this is second message from PTVS!')
 
-print(" [x] 发送了信息！")
+print(" [x] send message")
 
 channel.close()

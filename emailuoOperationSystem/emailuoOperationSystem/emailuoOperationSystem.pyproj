@@ -35,6 +35,9 @@
     <Compile Include="emailuoOperationSystem\check_server.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="config.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="emailuoOperationSystem\database.py">
       <SubType>Code</SubType>
     </Compile>
@@ -57,6 +60,10 @@
     <Folder Include="emailuoOperationSystem\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="emailuoOperationSystem\templates\404.html" />
+    <Content Include="emailuoOperationSystem\templates\500.html" />
+    <Content Include="emailuoOperationSystem\templates\serverStatus.html" />
+    <Content Include="emailuoOperationSystem\templates\serverDetail.html" />
     <Content Include="requirements.txt" />
     <Content Include="emailuoOperationSystem\static\content\bootstrap.css" />
     <Content Include="emailuoOperationSystem\static\content\bootstrap.min.css" />
@@ -80,8 +87,8 @@
     <Content Include="emailuoOperationSystem\static\scripts\respond.js" />
     <Content Include="emailuoOperationSystem\static\scripts\respond.min.js" />
     <Content Include="emailuoOperationSystem\static\scripts\_references.js" />
-    <Content Include="emailuoOperationSystem\templates\server.html" />
-    <Content Include="emailuoOperationSystem\templates\mail.html" />
+    <Content Include="emailuoOperationSystem\templates\serverManagement.html" />
+    <Content Include="emailuoOperationSystem\templates\email.html" />
     <Content Include="emailuoOperationSystem\templates\index.html" />
     <Content Include="emailuoOperationSystem\templates\layout.html" />
   </ItemGroup>

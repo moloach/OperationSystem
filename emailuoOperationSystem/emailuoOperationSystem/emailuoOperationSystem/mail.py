@@ -19,19 +19,10 @@ app.config['MAIL_SENDER'] = 'engoo admin <fanf@engoo.cn>'
 manager = Manager(app)
 mail = Mail(app)
 
-@app.route('/mail')
-def email():
-	user = 'ok'
-	# user.name = 'jack'
-	send_mail('183924638@qq.com', 'Test mail', 'mail/mail', user=user)
-	return 'ok'
-#显示已发送的文件
-
-
 def send_async_email(app, msg):
 	with app.app_context():
 		mail.send(msg)
-#异步发送邮件
+
 
 def send_mail(to, subject, template, **kwargs):
 	msg = Message(app.config['MAIL_SUBJECT_PREFIX'] + subject,
