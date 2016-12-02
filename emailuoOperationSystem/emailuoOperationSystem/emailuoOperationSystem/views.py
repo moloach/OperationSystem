@@ -3,19 +3,23 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template
+from flask import render_template, Flask, session, redirect,url_for
 from emailuoOperationSystem import app
 from emailuoOperationSystem import database
 
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 
-class NameForm(Form):
+
+app.config['SECRET_KEY'] = '4a1352f8d113d22e'
+
+class NameForm(FlaskForm):
     name = StringField('What is your name?', validators = [Required()])
     submit = SubmitField('Submit')
 
 data = database.Database()
+
 
 @app.route('/')
 @app.route('/home')
@@ -65,12 +69,15 @@ def serverDetail():
     name = None
     form = NameForm()
     if form.validate_on_submit():
-        name = form.name.data
-        form.name.date = ''
+        session['name'] = form.name.data
+        return redirect(url_for('serverManagement'))
     return render_template(
         'serverDetail.html',
         form = form,
-        name =name)
+       # name = session.get(name)
+        name = session.get(name)
+        )
+
 
 @app.errorhandler(404)
 def page_not_found(e):

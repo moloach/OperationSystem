@@ -5,7 +5,13 @@
     .page-header {
         margin-top: 5%;
     }
+    .container-fliud {
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
 
+    }
     .sidebar {
         position: fixed;
         top: 51px;
@@ -24,6 +30,7 @@
         border-right-style: solid;
         border-right-color: rgb(238,238,238);
     }
+
 </style>
 
 
@@ -36,11 +43,67 @@
                 <li><a href="#">group</a></li>
             </ul>
         </div>
-
-        <div class="col-sm-5 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <form method="POST">
-                {{form.name.label}} {{form.name()}}
-            </form>
+        <div class="span8" style="margin :50px">
+            <div class="col-sm-5 col-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="page-header">
+                    <h1>add new service</h1>
+                    <h2>hello, {% if name %}{{name}}{% else %} Stranger {% endif %}</h2>
+                    <form  method="POST">
+                        {{form.name.label}}
+                        {{form.name()}}
+                        {{form.submit()}}
+                    </form>
+                    <div class="modal-body">
+                        <form role="form" class="form-group" method="POST">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="instanceName" name="Ip" type="Ip" autofocus>
+                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
+                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
+                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <form role="form" class="form-group" method="POST">
+                            <fieldset>
+                                <div class="form-group">
+                                  
+                                </div>
+                            </fieldset>
+                        </form>
+                        <form role="form" class="form-group" method="POST">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <form role="form" class="form-group" method="POST">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <form role="form" class="form-group" method="POST">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <form role="form" class="form-group" method="POST">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Ip" name="Ip" type="Ip" autofocus>
+                                </div>
+                                <input name="submit" class="btn btn-default btn-success" type="submit"
+                                       value="submit">
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

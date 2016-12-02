@@ -18,7 +18,7 @@
     <PythonWsgiHandler>$(MSBuildProjectName).app</PythonWsgiHandler>
     <Name>emailuoOperationSystem</Name>
     <RootNamespace>emailuoOperationSystem</RootNamespace>
-    <InterpreterPath>E:\work\emailuoOperationSystem\env\Scripts\python.exe</InterpreterPath>
+    <InterpreterPath>E:\work\OperationSystem\env\Scripts\python.exe</InterpreterPath>
     <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
     <InterpreterVersion>2.7</InterpreterVersion>
