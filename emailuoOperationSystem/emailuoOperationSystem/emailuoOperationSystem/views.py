@@ -3,7 +3,7 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template, Flask, session, redirect,url_for
+from flask import render_template, Flask, session, redirect,url_for, flash
 from emailuoOperationSystem import app
 from emailuoOperationSystem import database
 
@@ -46,7 +46,6 @@ def mailManagement():
 @app.route('/serverManagement')
 def serverManagement():
     """Renders the server page."""
-    #email.app()
     return render_template(
         'serverManagement.html',
         title='serverManagement',
@@ -77,6 +76,17 @@ def serverDetail():
        # name = session.get(name)
         name = session.get(name)
         )
+
+@app.route('/deleteServer/<serverId>')
+def deleteServer(serverId):
+    result = data.delete_host(serverId)
+    if result :
+        flash('success!')
+        return redirect(url_for('serverManagement'))
+    else:
+        flash("error occured, please try again!")
+        return redirect(url_for('home'))
+
 
 
 @app.errorhandler(404)

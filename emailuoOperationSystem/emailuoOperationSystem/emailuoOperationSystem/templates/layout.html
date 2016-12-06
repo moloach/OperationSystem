@@ -13,42 +13,50 @@
 </head>
 
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fliud">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand">易脉络运维管理系统</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-left">
-                <li><a href="{{ url_for('home') }}">首页</a></li>
-                <li><a href="{{ url_for('serverStatus') }}">服务管理</a></li>
-                <li><a href="{{ url_for('mailManagement') }}">邮件管理</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-{% block content %}{% endblock %}
-<hr/>
-
-<div class="col-sm-4 col-sm-offset-3 col-md-5 col-md-offset-5 main">
-    <div class="footer">
-        <div class="container">
-            <p class="text-muted">&copy; {{ year }} - 上海恩谷科技信息有限公司</p>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fliud">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">易脉络运维管理系统</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{{ url_for('home') }}">首页</a></li>
+                    <li><a href="{{ url_for('serverStatus') }}">服务管理</a></li>
+                    <li><a href="{{ url_for('mailManagement') }}">邮件管理</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
+
+{% block content %}
+    <div class="container">
+        {%for message in get_flash_messages()%}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{message}}
+        </div>
+        {%endfor%}{% endblock %}
+    </div>
+    <hr />
+
+    <div class="col-sm-4 col-sm-offset-3 col-md-5 col-md-offset-5 main">
+        <div class="footer">
+            <div class="container">
+                <p class="text-muted">&copy; {{ year }} - 上海恩谷科技信息有限公司</p>
+            </div>
+        </div>
+    </div>
 
 
-<script src="/static/scripts/jquery-1.10.2.js"></script>
-<script src="/static/scripts/bootstrap.js"></script>
-<script src="/static/scripts/respond.js"></script>
-{% block scripts %}{% endblock %}
+    <script src="/static/scripts/jquery-1.10.2.js"></script>
+    <script src="/static/scripts/bootstrap.js"></script>
+    <script src="/static/scripts/respond.js"></script>
+    {% block scripts %}{% endblock %}
 
 </body>
 </html>

@@ -1,4 +1,5 @@
 import pymongo
+from bson import ObjectId
 #import json
 
 class Database:
@@ -16,14 +17,18 @@ class Database:
 
     def add_host(self,host_format):
         #posts = self.db.posts
-        post_result = server_table.insert_one(host_format)
+        add_result = self.server_table.insert_one(host_format)
 
 
     def delete_host(self,delete_id):
-        delete_result = server_table.remove(delete_id)
+        try:
+            delete_result = self.server_table.remove({"_id":ObjectId(delete_id)})
+            return True
+        except:
+            return False
+        # remove({"key":"value"})
 
 
-
-    def modify_host(self,modify_id,modify_format):
-        modify_result = server_table.update(modify_format)
+    def edit_host(self,modify_id,modify_format):
+        edit_result = self.server_table.update(modify_format)
         #
