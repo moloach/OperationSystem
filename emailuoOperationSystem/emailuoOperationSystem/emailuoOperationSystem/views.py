@@ -1,3 +1,4 @@
+#coding=utf-8
 """
 Routes and views for the flask application.
 """
@@ -63,19 +64,15 @@ def serverStatus():
         year = datetime.now().year)
 
 
-@app.route('/serverDetail', methods = ['GET','POST'])
-def serverDetail():
-    name = None
-    form = NameForm()
-    if form.validate_on_submit():
-        session['name'] = form.name.data
-        return redirect(url_for('serverManagement'))
+@app.route('/serverDetail/<serverId>')
+def serverDetail(serverId):
     return render_template(
         'serverDetail.html',
-        form = form,
-       # name = session.get(name)
-        name = session.get(name)
+        title='serverDetail',
+        year=datetime.now().year,
+        comment = data.get_one_host(serverId)
         )
+
 
 @app.route('/deleteServer/<serverId>')
 def deleteServer(serverId):
@@ -87,7 +84,14 @@ def deleteServer(serverId):
         flash("error occured, please try again!")
         return redirect(url_for('home'))
 
+@app.route('/editServer/<serverId>')
+def editServer(serverId):
+    return render_template()
 
+@app.route('/addServer')
+def addServer():
+    form = 
+    return render_template('serverAdd.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

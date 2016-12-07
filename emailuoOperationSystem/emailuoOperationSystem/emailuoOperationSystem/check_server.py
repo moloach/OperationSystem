@@ -31,12 +31,12 @@ class check_server:
 
         try:
             s.connect((self.address,self.port))
-            print("cocnnect %s on port %s success!" %(self.address,self.port))
+            #print("cocnnect %s on port %s success!" %(self.address,self.port))
             s.send(request)
             response = s.recv(100)
 
         except socket.error,e:
-            print("connect host %s on port %s fail，reason is %s" %(self.address,self.port,e))
+            #print("connect host %s on port %s fail，reason is %s" %(self.address,self.port,e))
             return False
 
         finally:
@@ -48,9 +48,9 @@ class check_server:
             (http_version, status, messages) = re.split(r'\s+',line,2)
 
         except ValueError:
-            print("分隔响应码失败")
+            #print("分隔响应码失败")
             return False
-        print ("return status Code is %s" %(status))
+        #print ("return status Code is %s" %(status))
 
         if status in ['200', '301', '302']:
             print('server status is well')
@@ -59,12 +59,12 @@ class check_server:
 
 
 
-if __name__ == '__main__':
-    parser = OptionParser()
-    parser.add_option('-a','--address',dest = "address", default = 'localhost',help='要检查的主机地址')
-    parser.add_option('-p','--port',dest = 'port',default = 80, help = "要检查的主机端口")
-    parser.add_option('-r','--resource',dest = 'resource', default = '/', help = '要检查的资源')
-    (options, args) = parser.parse_args()
+
+parser = OptionParser()
+parser.add_option('-a','--address',dest = "address", default = 'localhost',help='要检查的主机地址')
+parser.add_option('-p','--port',dest = 'port',default = 80, help = "要检查的主机端口")
+parser.add_option('-r','--resource',dest = 'resource', default = '/', help = '要检查的资源')
+(options, args) = parser.parse_args()
 
 
 checks = check_server(options.address,options.port,options.resource)
