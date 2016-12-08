@@ -62,6 +62,7 @@
   <ItemGroup>
     <Content Include="emailuoOperationSystem\templates\404.html" />
     <Content Include="emailuoOperationSystem\templates\500.html" />
+    <Content Include="emailuoOperationSystem\templates\error.html" />
     <Content Include="emailuoOperationSystem\templates\serverStatus.html" />
     <Content Include="emailuoOperationSystem\templates\serverAdd.html" />
     <Content Include="emailuoOperationSystem\templates\serverDetail.html" />

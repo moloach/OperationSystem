@@ -4,20 +4,31 @@ Routes and views for the flask application.
 """
 
 from datetime import datetime
-from flask import render_template, Flask, session, redirect,url_for, flash
+from flask import render_template, Flask, session, redirect,url_for, flash, request
 from emailuoOperationSystem import app
 from emailuoOperationSystem import database
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from flask_wtf import FlaskForm, CsrfProtect
+from wtforms import StringField,SubmitField, IntegerField, SelectMultipleField, validators 
 from wtforms.validators import Required
 
 
+app.secret_key = '4a1352f8d113d22e'
 app.config['SECRET_KEY'] = '4a1352f8d113d22e'
+CsrfProtect(app)
 
-class NameForm(FlaskForm):
-    name = StringField('What is your name?', validators = [Required()])
+class InstanceForm(FlaskForm):
+    #name = StringField(validators = [Required()])
+    #text field 
+    server_name = StringField([validators.Required()])
+    IP_address = StringField([validators.Required()])
+    OS = StringField([validators.Required()])
+    note = StringField( [validators.Required()])
+    port = IntegerField( [validators.Required()])
+    cycle = IntegerField([validators.Required()])
+    server_type = StringField( [validators.Required()])
     submit = SubmitField('Submit')
+    #submit button
 
 data = database.Database()
 
@@ -88,15 +99,48 @@ def deleteServer(serverId):
 def editServer(serverId):
     return render_template()
 
-@app.route('/addServer')
+@app.route('/addServer',methods = ["GET","POST"])
 def addServer():
-    form = 
-    return render_template('serverAdd.html')
-
+    form = InstanceForm()
+    if request.method == 'POST':
+        if  form.validate_on_submit():
+           
+            post_format = {
+            'server_name':form.server_name.data,
+            'IP_address':form.IP_address.data,
+            'OS':form.OS.data,
+            'note':form.note.data,
+            'port':form.port.data,
+            'cycle':form.cycle.data,
+            'server_type':form.server_type.data
+            }
+            #use the form['OS'] will fail because the form['XX'] is a StringField Object
+            result = data.add_host(post_format)
+            if result == True:
+                return redirect('serverManagement')
+            else:
+                flash("The Form have some error!")
+                return render_template('error.html',form = form)
+        else:
+            return redirect('/')
+    else:
+        return render_template('serverAdd.html',
+                               form = form)
+'''
+@app.route('/addServer',methods = ["GET","POST"])
+def addServer():
+    name =None
+    form = InstanceForm()
+    if not form.validate_on_submit():
+        name = form['name']
+        #form['name'] = ''
+        return render_template('serverAdd.html',form = form,name = name)
+    return render_template('serverAdd.html',form = form, name =name)
+'''
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html',title = 'Error',year = datetime.now().year), 404
 
 @app.errorhandler(500)
 def internel_server_error(e):
-    return render_template('500.html'), 500
+    return render_template('500.html',title = 'Error',year = datetime.now().year), 500

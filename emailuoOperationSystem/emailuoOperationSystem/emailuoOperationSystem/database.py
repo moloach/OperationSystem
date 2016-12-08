@@ -23,8 +23,11 @@ class Database:
 
     def add_host(self,host_format):
         #posts = self.db.posts
-        add_result = self.server_table.insert_one(host_format)
-
+        try:
+            add_result = self.server_table.insert_one(host_format)
+            return True
+        except Exception as e:
+            print e
 
     def delete_host(self,delete_id):
         try:

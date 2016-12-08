@@ -38,70 +38,46 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="{{ url_for('serverStatus')}}">status</a></li>
-                <li><a href="{{ url_for('serverManagement') }}">managements</a></li>
-                <li><a href="#">group</a></li>
+                <li class="active"><a href="{{ url_for('serverStatus')}}">服务状态</a></li>
+                <li><a href="{{ url_for('serverManagement') }}">服务管理</a></li>
+                <li><a href="#">服务分组</a></li>
             </ul>
         </div>
-        <div class="span8"   style="margin :50px">
+        <div class="span8" style="margin: 50px">
             <div class="col-sm-5 col-offset-3 col-md-10 col-md-offset-2 main">
                 <div class="page-header">
-                    <h1>add new service</h1>
-                    <h2>hello, {% if name %}{{name}}{% else %} Stranger {% endif %}</h2>
-                    <form  method="POST">
-                        {{form.name.label}}
-                        {{form.name()}}
-                        {{form.submit()}}
+                    <h1 class="page-header">Hello {% if name %}{{form.name}}{%endif%}</h1>
+                    <h1>添加新的服务</h1>
+                    <form role="form" class="form-group" method="POST">
+
+
+                        <p>
+                            <label class="col-sm-2 control-label no-padding-right">实例名</label>{{form.server_name()}}
+                        </p>
+                        <p>
+                            <label class="col-sm-2 control-label no-padding-right">IP地址</label>{{form.IP_address()}}
+                        </p>
+                        <p>
+                            <label class="col-sm-2 control-label no-padding-right">备注</label>{{form.note()}}
+                        </p>
+                        <p>
+                            <label class="col-sm-2 control-label no-padding-right">操作系统</label>{{form.OS()}}
+                        </p>
+                        <p>
+                            <label class="col-sm-2 control-label no-padding-right">检测端口</label>{{form.port()}}
+                        </p>
+                        <p>
+                            <label class="col-sm-2 control-label no-padding-right">检测周期</label>{{form.cycle()}}
+                        </p>
+                        <p>
+                            <label class="col-sm-2 control-label no-padding-right">服务分组</label>{{form.server_type()}}
+                        </p>
+                        <p>
+                        </p>
+
+                        <p>{{form.submit()}}</p>
+                        <p>{{ form.hidden_tag() }}</p>
                     </form>
-                    <div class="modal-body">
-                        <form role="form" class="form-group" method="POST">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="instanceName" name="Ip" type="Ip" autofocus>
-                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
-                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
-                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <form role="form" class="form-group" method="POST">
-                            <fieldset>
-                                <div class="form-group">
-                                  
-                                </div>
-                            </fieldset>
-                        </form>
-                        <form role="form" class="form-group" method="POST">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <form role="form" class="form-group" method="POST">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <form role="form" class="form-group" method="POST">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Name" name="Ip" type="Ip" autofocus>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <form role="form" class="form-group" method="POST">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Ip" name="Ip" type="Ip" autofocus>
-                                </div>
-                                <input name="submit" class="btn btn-default btn-success" type="submit"
-                                       value="submit">
-                            </fieldset>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

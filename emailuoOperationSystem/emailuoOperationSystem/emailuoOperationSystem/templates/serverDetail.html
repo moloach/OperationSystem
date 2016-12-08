@@ -40,9 +40,9 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="{{ url_for('serverStatus')}}">״̬</a></li>
-                <li><a href="{{ url_for('serverManagement') }}">managements</a></li>
-                <li><a href="#">group</a></li>
+                <li><a href="{{ url_for('serverStatus') }}">服务状态</a></li>
+                <li><a href="{{ url_for('serverManagement') }}">服务管理</a></li>
+                <li><a href="#">服务分组</a></li>
             </ul>
         </div>
 
@@ -53,7 +53,7 @@
                     <label class="col-sm-2 control-label no-padding-right">实例名</label>
                     <div class="col-sm-10" style="padding-top:5px;">
                         <span>
-                            {{comment['serverName']}}
+                            {{comment['server_name']}}
                         </span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <label class="col-sm-2 control-label no-padding-right">IP地址</label>
                     <div class="col-sm-10" style="padding-top:5px;">
                         <span>
-                            {{comment['IPadress']}}
+                            {{comment['IP_address']}}
                         </span>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                     <label class="col-sm-2 control-label no-padding-right">服务分组</label>
                     <div class="col-sm-10" style="padding-top:5px;">
                         <span>
-                            {{comment['serverType']}}
+                            {{comment['server_type']}}
                         </span>
                     </div>
                 </div>

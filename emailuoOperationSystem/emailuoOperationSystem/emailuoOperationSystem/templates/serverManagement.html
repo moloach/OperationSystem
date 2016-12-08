@@ -59,6 +59,7 @@
                         <th>instance</th>
                         <th>ip address</th>
                         <th>OS</th>
+
                         <th>status</th>
                         <th></th>
                         <th></th>
@@ -68,10 +69,10 @@
                     <tbody>
                     {% for comment in comments %}
                     <tr>
-                        <td>{{comment["serverName"]}}</td>
-                        <td>{{comment["hostname"]}}</td>
+                        <td>{{comment["server_name"]}}</td>
+                        <td>{{comment["IP_address"]}}</td>
                         <td>{{comment['OS']}}</td>
-                        <td>{{comment["port"]}}</td>
+                        <td></td>
                         <td><a href="{{ url_for('serverDetail',serverId = comment['_id']) }}">detail</a></td>
                         <td><a href="{{ url_for('editServer', serverId = comment['_id']) }}">edit</a></td>
                         <td><a href="{{ url_for('deleteServer', serverId = comment['_id']) }}">delete</a></td>

@@ -8,7 +8,7 @@ import sys
 import re
 from StringIO import StringIO
 
-class check_server:
+class Check(object):
     """
     用socket建立一个连接，发送http请求，根据返回的状态码来判断服务的健壮度
     """
@@ -67,7 +67,7 @@ parser.add_option('-r','--resource',dest = 'resource', default = '/', help = '要
 (options, args) = parser.parse_args()
 
 
-checks = check_server(options.address,options.port,options.resource)
+checks = Check(options.address,options.port,options.resource)
 while True:
     checks.check()
     print("=======================")
