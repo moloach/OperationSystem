@@ -7,6 +7,7 @@ from datetime import datetime
 from flask import render_template, Flask, session, redirect,url_for, flash, request
 from emailuoOperationSystem import app
 from emailuoOperationSystem import database
+from emailuoOperationSystem import check_server
 
 from flask_wtf import FlaskForm, CsrfProtect
 from wtforms import StringField,SubmitField, IntegerField, SelectMultipleField, validators 
@@ -31,7 +32,7 @@ class InstanceForm(FlaskForm):
     #submit button
 
 data = database.Database()
-
+#checks = check_server.check_server()
 
 @app.route('/')
 @app.route('/home')
@@ -58,11 +59,19 @@ def mailManagement():
 @app.route('/serverManagement')
 def serverManagement():
     """Renders the server page."""
+    server_data = data.get_host()
+    server_status = []
+    server_status.append( check_server.get_server_status())
+    #server_data = server_data + server_status
+    if server_status == []:
+        server_status = ['error']
+    
     return render_template(
         'serverManagement.html',
         title='serverManagement',
         year=datetime.now().year,
-       comments = data.get_host()
+       comments = server_data,
+       status = server_status
         #message='Your application description page.'
     )
 

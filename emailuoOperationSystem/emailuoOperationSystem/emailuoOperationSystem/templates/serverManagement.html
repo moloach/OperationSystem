@@ -52,34 +52,36 @@
             <div class="col-md-9 col-md-3 ">
                 <a href="{{url_for('addServer')}}">添加新的服务实例</a>
             </div>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>instance</th>
-                        <th>ip address</th>
-                        <th>OS</th>
-
-                        <th>status</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for comment in comments %}
-                    <tr>
-                        <td>{{comment["server_name"]}}</td>
-                        <td>{{comment["IP_address"]}}</td>
-                        <td>{{comment['OS']}}</td>
-                        <td></td>
-                        <td><a href="{{ url_for('serverDetail',serverId = comment['_id']) }}">detail</a></td>
-                        <td><a href="{{ url_for('editServer', serverId = comment['_id']) }}">edit</a></td>
-                        <td><a href="{{ url_for('deleteServer', serverId = comment['_id']) }}">delete</a></td>
-                    </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>实例名</th>
+                                <th>IP地址</th>
+                                <th>操作系统</th>
+                                <th>服务状态</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for comment in comments %}
+                            {%for item in status%}
+                            <tr>
+                                <td>{{comment["server_name"]}}</td>
+                                <td>{{comment["IP_address"]}}</td>
+                                <td>{{comment['OS']}}</td>
+                                <td>{{item}}</td>
+                                <td><a href="{{ url_for('serverDetail',serverId = comment['_id']) }}">detail</a></td>
+                                <td><a href="{{ url_for('editServer', serverId = comment['_id']) }}">edit</a></td>
+                                <td><a href="{{ url_for('deleteServer', serverId = comment['_id']) }}">delete</a></td>
+                            </tr>
+                            {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                
             </div>
         </div>
     </div>

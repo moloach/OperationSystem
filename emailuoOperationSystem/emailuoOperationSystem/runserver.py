@@ -2,9 +2,10 @@
 This script runs the emailuoOperationSystem application using a development server.
 """
 
+from thread import start_new_thread
 from os import environ
 from emailuoOperationSystem import app
-#from emailuoOperationSystem.check_server import Check
+
 
 if __name__ == '__main__':
     
@@ -15,4 +16,5 @@ if __name__ == '__main__':
     except ValueError:
         PORT = 5555
     app.debug = True
+
     app.run(HOST, PORT)
