@@ -4,6 +4,7 @@
 #from optparse import OptionParser
 import socket
 import time
+
 import sys
 import re
 from StringIO import StringIO
@@ -13,7 +14,7 @@ import database
 
 class Check(object):
     """
-    用socket建立一个连接，发送http请求，根据返回的状态码来判断服务的健壮度
+    鐢╯ocket鍙戦�乭ttp璇锋眰鍒ゆ柇鏈嶅姟鐨勫仴澹害
     """
   
     def __call__(self,address, port):
@@ -26,7 +27,7 @@ class Check(object):
         #if not self.resource.startswitch('/'):
             #self.resource = '/' + self.resource
 
-        request = 'GET / HTTP/1.1\r\nHOST:%s\r\n\r\n' %( address)
+        request = 'GET / HTTP/1.1\r\nHOST:%s\r\n\r\n' %address
 
         s = socket.socket()
 
@@ -40,9 +41,9 @@ class Check(object):
             s.send(request)
             response = s.recv(100)
 
-        except socket.error,e:
-            #print("connect host %s on port %s fail，reason is %s" %(self.address,self.port,e))
-            return 'error3'
+        except socket.error as e:
+            #print("connect host %s on port %s fail??reason is %s" %(self.address,self.port,e))
+            return 'connect error'
 
         finally:
             s.close()
@@ -53,37 +54,50 @@ class Check(object):
             (http_version, status, messages) = re.split(r'\s+',line,2)
 
         except ValueError:
-            #print("分隔响应码失败")
-            return 'error1'
+            #print("?指???应??失??")
+            return 'error'
         #print ("return status Code is %s" %(status))
 
         if status in ['200', '301', '302']:
             #print('server status is well')
             return status
         else:
-            #print('请检查服务器状态')
-            return 'error2'
+            #print('????????????状态')
+            return status
 
 checks = Check()
 data = database.Database()
-server_data = data.get_host()
 
-server_loop = []
-for item in server_data:
-        a = {
-            'check_IP':item['IP_address'],
-            'port':item['port']
-            }
-        server_loop.append(a)
+def get_update_host():
+    server_data = data.get_host()
+    server_loop = []
+    for item in server_data:
+            a = {
+                'check_IP':item['IP_address'],
+                'port':item['port'],
+                'cycle':item['cycle']
+                }
+            server_loop.append(a)
+    return server_loop
 
 
-def get_server_status():
-    for item in server_loop:
-        check_IP = item['check_IP']
-        #print(check_IP)
-        check_port = item['port']       
-        check_result = checks.check(check_IP,check_port)
-        return check_result
+def save_server_status():
+    while True:
+        check_result = []
+        server_loop = get_update_host()
+        #
+        for item in server_loop:
+            check_IP = item['check_IP']
+            #print(check_IP)
+            check_port = item['port']       
+            check_result.append(checks.check(check_IP,check_port))
+            time.sleep(item['cycle'])
+        data.save_check_status(check_result)
+        
+
+
+if __name__ == "__main__":
+    save_server_status()
 #time.sleep(5)
 '''
 #the function have loop-function
@@ -104,9 +118,9 @@ def get_server_status():
 '''
 '''
 parser = OptionParser()
-parser.add_option('-a','--address',dest = "address", default = 'localhost',help='要检查的主机地址')
-parser.add_option('-p','--port',dest = 'port',default = 80, help = "要检查的主机端口")
-parser.add_option('-r','--resource',dest = 'resource', default = '/', help = '要检查的资源')
+parser.add_option('-a','--address',dest = "address", default = 'localhost',help='要????????????址')
+parser.add_option('-p','--port',dest = 'port',default = 80, help = "要???????????丝?")
+parser.add_option('-r','--resource',dest = 'resource', default = '/', help = '要????????源')
 (options, args) = parser.parse_args()
 
 
@@ -117,8 +131,8 @@ while True:
     time.sleep(10)
 
 
-在命令行中，执行脚本 python check_server.py --address hostname --resource 路径 --port 端口数据
-notice： 路径要加上'/ ' 前缀
-example：python check_server.py  --address 121.199.62.174 --resource /js/tmpl/login.ejs?.. --port 15672
+?????????校?执?薪疟? python check_server.py --address hostname --resource 路?? --port ?丝?????
+notice?? 路??要????'/ ' 前缀
+example??python check_server.py  --address 121.199.62.174 --resource /js/tmpl/login.ejs?.. --port 15672
 
 '''

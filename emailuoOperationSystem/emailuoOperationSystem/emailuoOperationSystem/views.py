@@ -60,11 +60,11 @@ def mailManagement():
 def serverManagement():
     """Renders the server page."""
     server_data = data.get_host()
-    server_status = []
-    server_status.append( check_server.get_server_status())
+    server_status = data.get_logging_status() 
+    print server_status
     #server_data = server_data + server_status
     if server_status == []:
-        server_status = ['error']
+        server_status = ['check error']
     
     return render_template(
         'serverManagement.html',
@@ -98,7 +98,6 @@ def serverDetail(serverId):
 def deleteServer(serverId):
     result = data.delete_host(serverId)
     if result :
-        flash('success!')
         return redirect(url_for('serverManagement'))
     else:
         flash("error occured, please try again!")
@@ -112,8 +111,7 @@ def editServer(serverId):
 def addServer():
     form = InstanceForm()
     if request.method == 'POST':
-        if  form.validate_on_submit():
-           
+        if  form.validate_on_submit():             
             post_format = {
             'server_name':form.server_name.data,
             'IP_address':form.IP_address.data,

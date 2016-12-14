@@ -67,18 +67,18 @@
                         </thead>
                         <tbody>
                             {% for comment in comments %}
-                            {%for item in status%}
+                            
                             <tr>
                                 <td>{{comment["server_name"]}}</td>
                                 <td>{{comment["IP_address"]}}</td>
                                 <td>{{comment['OS']}}</td>
-                                <td>{{item}}</td>
+                                <td></td>
                                 <td><a href="{{ url_for('serverDetail',serverId = comment['_id']) }}">detail</a></td>
                                 <td><a href="{{ url_for('editServer', serverId = comment['_id']) }}">edit</a></td>
                                 <td><a href="{{ url_for('deleteServer', serverId = comment['_id']) }}">delete</a></td>
                             </tr>
                             {% endfor %}
-                            {% endfor %}
+                            
                         </tbody>
                     </table>
                 
