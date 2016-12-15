@@ -23,7 +23,7 @@ class Check(object):
         #self.resource = resource
         return Check
 
-    def check(self,address,port):
+    def health_check(self,address,port):
         #if not self.resource.startswitch('/'):
             #self.resource = '/' + self.resource
 
@@ -90,7 +90,7 @@ def save_server_status():
             check_IP = item['check_IP']
             #print(check_IP)
             check_port = item['port']       
-            check_result.append(checks.check(check_IP,check_port))
+            check_result.append(checks.health_check(check_IP,check_port))
             time.sleep(item['cycle'])
         data.save_check_status(check_result)
         
