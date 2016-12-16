@@ -10,8 +10,10 @@ import re
 from StringIO import StringIO
 import pymongo
 import database
+from emailuoOperationSystem import app
+from apscheduler.schedulers.background import BackgroundScheduler
 
-
+#from flask import current_app
 class Check(object):
     """
     用socket发送http请求判断服务的健壮度
@@ -27,22 +29,24 @@ class Check(object):
         #if not self.resource.startswitch('/'):
             #self.resource = '/' + self.resource
 
-        request = 'GET / HTTP/1.1\r\nHOST:%s\r\n\r\n' %address
+        request = 'GET / HTTP/1.1\r\nHOST:%s\r\n\r\n' % address
 
         s = socket.socket()
 
         s.settimeout(10)
 
-        #print("start to connect %s on the  %s port......." %(self.address,int(self.port)))
+        #print("start to connect %s on the %s port......."
+        #%(self.address,int(self.port)))
 
         try:
             s.connect((address,port))
-            print("cocnnect %s on port %s success!" %(address,port))
+            print("cocnnect %s on port %s success!" % (address,port))
             s.send(request)
             response = s.recv(100)
 
         except socket.error as e:
-            #print("connect host %s on port %s fail??reason is %s" %(self.address,self.port,e))
+            #print("connect host %s on port %s fail??reason is %s"
+            #%(self.address,self.port,e))
             return 'connect error'
 
         finally:
@@ -75,29 +79,43 @@ def get_update_host():
             a = {
                 'check_IP':item['IP_address'],
                 'port':item['port'],
-                'cycle':item['cycle']
-                }
+                'cycle':item['cycle'],
+                'name':item['name']
+            }
             server_loop.append(a)
     return server_loop
 
 
-def save_server_status():
-    while True:
-        check_result = []
-        server_loop = get_update_host()
-        #
-        for item in server_loop:
-            check_IP = item['check_IP']
-            #print(check_IP)
-            check_port = item['port']       
-            check_result.append(checks.health_check(check_IP,check_port))
-            time.sleep(item['cycle'])
-        data.save_check_status(check_result)
-        
+#def save_server_status():
+#    while True:
+#        check_result = []
+#        server_loop = get_update_host()
+#        #
+#        for item in server_loop:
+#            check_IP = item['check_IP']
+#            #print(check_IP)
+#            check_port = item['port']
+#            check_result.append(checks.health_check(check_IP,check_port))
+#            time.sleep(item['cycle'])
+#        data.save_check_status(check_result)
+
+def update_check_res(item):
+    res = checks.health_check(item['check_IP'], item['port'])
+    app.logger.debug('check ' + item['check_IP'] + ' port ' + item['port'] + ' status ' + res)
+    data.save_check_status(res, item['check_IP'], item['port'], item['name'])
+
+scheduler = BackgroundScheduler()
+
+def start_check():
+    app.logger.debug('--------start server status check----------')
+    server_loop = get_update_host()
+    for item in server_loop:
+        scheduler.add_job(update_check_res, 'interval', seconds=int(item['cycle']), kwargs=item)            
+    scheduler.start()
 
 
-if __name__ == "__main__":
-    save_server_status()
+#if __name__ == "__main__":
+    #save_server_status()
 #time.sleep(5)
 '''
 #the function have loop-function
