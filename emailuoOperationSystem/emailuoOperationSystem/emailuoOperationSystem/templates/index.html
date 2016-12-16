@@ -1,41 +1,75 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
-<div>
+<script type="text/javascript" src="/static/scripts/highcharts.js"></script>
+<script type="text/javascript" src="/static/scripts/jquery-1.10.2.min.js"></script>
         <div class="jumbotron">
-            <h1>Flask error</h1>
-            
+            <h1>Monitor System</h1>            
         </div>
 
-        <div class="row">
-            <div class="col-md-3">
-                <h2>Getting started</h2>
-                <p>
-                    Flask gives you a powerful, patterns-based way to build dynamic websites that
-                    enables a clean separation of concerns and gives you full control over markup
-                    for enjoyable, agile development.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="http://flask.pocoo.org/docs/">Learn more &raquo;</a>
-                </p>
-            </div>
-            <div class="col-md-3">
-                <h2>Get more libraries</h2>
-                <p>The Python Package Index is a repository of software for the Python programming language.</p>
-                <p>
-                    <a class="btn btn-default" href="https://pypi.python.org/pypi">Learn more &raquo;</a>
-                </p>
-            </div>
-            <div class="col-md-3">
-                <h2>Microsoft Azure</h2>
-                <p>You can easily publish to Microsoft Azure using Python Tools for Visual Studio. Find out how you can host your application using a free trial today.</p>
-                <p>
-                    <a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a>
-                </p>
-            </div>
-        </div>
-    </div>
+      
+<script type="text/javascript">
+$(function () {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Rencent Health Results'
+        },
+        subtitle: {
+            text: 'Source: database'
+        },
+        xAxis: {
+            categories: [
+                'app1',
+                'app2',
+                'app3',
+                'app4',
+                'app5',
+                'app6',
+                'app7',
+                'app8',
+                'app9',
+                'app10',
+                'app11',
+                'app12'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'counts'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'success',
+            data: [2,3,4,5,6,7,3,8,9,0,9,5]
+
+        }, {
+            name: 'fail',
+            data: [2, 3, 4, 5, 9, 8, 3, 8, 7, 5, 9, 5]
+
+        }]
+    });
+});
+</script>
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
         {% endblock %}

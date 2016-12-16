@@ -2,7 +2,7 @@
 """
 Routes and views for the flask application.
 """
-
+import json
 from datetime import datetime
 from flask import render_template, Flask, session, redirect,url_for, flash, request
 from emailuoOperationSystem import app
@@ -38,10 +38,13 @@ data = database.Database()
 @app.route('/home')
 def home():
     """Renders the home page."""
+    server_status = data.get_logging_status()
+    servers = data.get_host()
     return render_template(
         'index.html',
         title='Home Page',
         year=datetime.now().year,
+        comments = servers
     )
 
 @app.route('/mailManagement')
@@ -151,3 +154,18 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internel_server_error(e):
     return render_template('500.html',title = 'Error',year = datetime.now().year), 500
+
+
+@app.route('/getHealthData')
+def getHealthData():
+    last_status = data.get_last_logging_status()
+    servers = data.get_host()
+    health_data = []
+    server_data = []
+    for item in last_status['status']:
+        if item == '200':
+            health_data.append(1)
+        else:
+            health_data.append(0)
+    #return json.dumps(health_data)
+    return health_data

@@ -35,7 +35,7 @@ class Database:
 
     def delete_host(self,delete_id):
         try:
-            self.server_table.remove({"_id":ObjectId(delete_id)})
+            self.server_table.delete_one({"_id":ObjectId(delete_id)})
             return True
         except:
             return False
@@ -56,3 +56,7 @@ class Database:
 
     def get_logging_status(self):
         return self.logging_table.find()
+
+    def get_last_logging_status(self):
+        return self.logging_table.find().sort('timestamp',pymongo.DESCENDING)[0]
+            
