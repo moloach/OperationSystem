@@ -47,11 +47,14 @@ class Database:
         #edit_format must be string type.
         #update({filter},{'$'})
 
-    def save_check_status(self,status_format):
+    def save_check_status(self,status_format,ip,port,server_name):
         post_format = {
-           "status":status_format,
-           "timestamp":time.time()*1000
-           }
+            "status":status_format,
+            "timestamp":time.time()*1000,
+            "ip":ip,
+            "port": port,
+            "server_name": server_name
+        }
         self.logging_table.insert_one(post_format)
 
     def get_logging_status(self):
